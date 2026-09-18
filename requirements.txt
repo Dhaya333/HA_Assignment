@@ -3,6 +3,8 @@ torchvision
 transformers
 opencv-python
 numpy
+pytest
 Pillow
+pytest-cov
 matplotlib
 open3d

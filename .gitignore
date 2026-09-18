@@ -1,5 +1,6 @@
 # Python
 __pycache__/
+.pytest_cache/
 *.py[cod]
 *.egg-info/
 *.egg
@@ -17,6 +18,7 @@ models/
 *.safetensors
 
 # Data (keep folder structure, ignore contents)
+data/
 data/input/*
 data/output/*
 !data/input/.gitkeep
@@ -32,3 +34,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Test artifacts
+.coverage
+htmlcov/

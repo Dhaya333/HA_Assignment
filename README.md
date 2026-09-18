@@ -62,3 +62,14 @@ For each input image, a result folder is created under `data/output/` containing
 Camera calibration, stereo/multi-image input, visual odometry, SLAM, semantic segmentation for obstacle classification, occupancy/free-space mapping, and eventual path-planning + drone controller integration. See project spec for the full version roadmap.
 
 ## Project Structure
+
+## Development Status
+
+- [x] Phase 1 — Environment
+- [x] Phase 2 — Model
+- [x] Phase 3 — Image → Depth
+- [x] Phase 4 — Depth → 3D
+- [x] Phase 5 — Visualization
+- [x] Phase 6 — Metadata
+- [x] Phase 7 — Testing
+- [x] Phase 8 — Documentation
