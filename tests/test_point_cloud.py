@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 from PIL import Image
+from unittest.mock import patch
 
 from src.point_cloud import (
     CameraIntrinsics,
@@ -78,3 +79,29 @@ def test_save_point_cloud_writes_file(flat_distance_map, tmp_path: Path):
 
     assert saved_path.exists()
     assert saved_path.stat().st_size > 0
+
+
+
+def test_zero_points_raises(monkeypatch):
+    # Empty distance map (0 rows) -> projection yields zero points.
+    empty_distance = np.zeros((0, 10), dtype=np.float32)
+    with pytest.raises(PointCloudGenerationError):
+        build_point_cloud(empty_distance, stride=1)
+
+
+def test_save_point_cloud_write_failure_raises(flat_distance_map, tmp_path: Path):
+    result = build_point_cloud(flat_distance_map, stride=1)
+    output_path = tmp_path / "scene.ply"
+
+    with patch("src.point_cloud.o3d.io.write_point_cloud", return_value=False):
+        with pytest.raises(PointCloudGenerationError):
+            save_point_cloud(result, output_path)
+
+
+def test_save_point_cloud_generic_exception_wrapped(flat_distance_map, tmp_path: Path):
+    result = build_point_cloud(flat_distance_map, stride=1)
+    output_path = tmp_path / "scene.ply"
+
+    with patch("src.point_cloud.o3d.io.write_point_cloud", side_effect=OSError("disk full")):
+        with pytest.raises(PointCloudGenerationError):
+            save_point_cloud(result, output_path)
